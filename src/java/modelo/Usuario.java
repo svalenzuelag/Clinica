@@ -5,6 +5,10 @@
  */
 package modelo;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+
 /**
  *
  * @author josue
@@ -14,7 +18,7 @@ public class Usuario {
     private int id_rol;
     private String usuario;
     private String pass;
-
+    private Conexion cn;    
     public Usuario() {
     }
     public Usuario(int id, int id_rol, String usuario, String pass) {
@@ -58,5 +62,21 @@ public class Usuario {
         this.usuario = usuario;
     }
     
+    public HashMap drop_usuario(){
+     HashMap<String,String> drop = new HashMap();
+     try {
+         cn = new Conexion();
+         String query = "SELECT id_usuario AS id, usuario FROM usuario;";
+         cn.abrir_conexion();
+         ResultSet consulta = cn.conexionBD.createStatement().executeQuery(query);
+         while (consulta.next()){
+             drop.put(consulta.getString("id"), consulta.getString("usuario"));
+         }
+         cn.cerrar_conexion();
+     }catch(SQLException ex){
+         System.out.println(ex.getMessage());
+     }
+     return drop;
+    }
     
 }

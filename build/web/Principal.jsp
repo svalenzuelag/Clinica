@@ -11,7 +11,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-  	<title>Sidebar 07</title>
+  	<title>Sistema Admin</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -27,23 +27,23 @@
 				<h1><a href="Principal.jsp" class="logo">Cli</a></h1>
         <ul class="list-unstyled components mb-5">
           <li class="active">
-            <a href="#"><span class="fa fa-home"></span> Inicio</a>
+            <a href="Principal.jsp"><span class="fa fa-home"></span> Inicio</a>
           </li>
           <li>
-              <a href="#"><span class="fa fa-user"></span>Usuarios</a>
+              <a href="CrudEmpleado.jsp"><span class="fa fa-user"></span>Usuarios</a>
           </li>
           <li>
             <a href="#"><span class="fa fa-bars"></span> Historial</a>
           </li>
           <li>
-            <a href="#"><span class="fa fa-user"></span> Pacientes</a>
+            <a href="CrudPaciente.jsp"><span class="fa fa-user"></span> Pacientes</a>
           </li>
           <li>
             <a href="#"><span class="fa fa-calendar-o"></span> Citas</a>
             
             <a href="#"><span class="fa fa-hospital-o"></span> Sucursales</a>
             
-            <a href="#"><span class="fa fa-plus-square"></span> Medicamentos</a>
+            <a href="CrudMedicamento.jsp"><span class="fa fa-plus-square"></span> Medicamentos</a>
             
             <a href="#"><span class="fa fa-clipboard" ></span> Consultas</a>
             
@@ -66,15 +66,37 @@
               <i class="fa fa-bars"></i>
               <span class="sr-only">Toggle Menu</span>
             </button>
-            <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
-                <i class="fa fa-bars"></i>
-            </button>
-
+            
            
         </nav>
 
         <div class="container mt-4">
-            <h1>Bienvenido al Sistema...<strong>Usuario:${usuario}</strong></h1>
+            <h1>Bienvenido al Sistema  <strong style="text-transform: capitalize">${usuario}</strong></h1><br><br>
+            
+            <div class="card-group">
+                <div class="card" style="margin-right: 10px">
+    <img class="card-img-top img-fluid" src="imagen/consulta.jpg" style="height: 300px" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Consulta General</h5>
+      <p class="card-text"></p>
+    </div>
+  </div>
+  <div class="card" style="margin-right: 10px">
+      <img class="card-img-top img-fluid" src="imagen/pediatria.jpg" style="height: 300px" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Pediatria</h5>
+      <p class="card-text"></p>
+      
+    </div>
+  </div>
+  <div class="card" style="margin-right: 10px">
+    <img class="card-img-top" src="imagen/examenes.jpg" style="height: 300px" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Exámenes Medicos</h5>
+      <p class="card-text"></p>
+    </div>
+  </div>
+</div>
         </div>
       </div>
 		</div>

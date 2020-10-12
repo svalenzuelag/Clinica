@@ -8215,7 +8215,7 @@ h1, h2, h3, h4, h5,
 #sidebar {
   min-width: 270px;
   max-width: 270px;
-  background: #3e64ff;
+  background: #000000;
   color: #fff;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
@@ -8320,8 +8320,8 @@ a[data-toggle="collapse"] {
   transition: all 0.3s; }
 
 .btn.btn-primary {
-  background: #3e64ff;
-  border-color: #3e64ff; }
+  background: #000000;
+  border-color: #000000; }
   .btn.btn-primary:hover, .btn.btn-primary:focus {
-    background: #3e64ff !important;
-    border-color: #3e64ff !important; }
+    background: #000000 !important;
+    border-color: #000000 !important; }

@@ -25,6 +25,8 @@ public class login extends HttpServlet {
     UsuarioDAO dao = new UsuarioDAO();
     Usuario u=new Usuario();
     int r;
+   
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -35,11 +37,22 @@ public class login extends HttpServlet {
             String pass=request.getParameter("txtpass");
             u.setUsuario(usuario);
             u.setPass(pass);
+            String rol= dao.rol(u);
             r=dao.validar(u);
             if(r==1){
-                request.getSession().setAttribute(usuario, usuario);
-                request.getSession().setAttribute(pass, pass);
-                request.getRequestDispatcher("Principal.jsp").forward(request, response);
+                request.getSession().setAttribute("usuario", usuario);
+                request.getSession().setAttribute("pass", pass);
+                
+                
+                if(rol.equals("admin")){
+                    request.getRequestDispatcher("Principal.jsp").forward(request, response);
+                }
+                else{
+                    request.getRequestDispatcher("VistaUsuario.jsp").forward(request, response);
+                }
+                
+               
+                
             }else{
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
