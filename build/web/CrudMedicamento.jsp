@@ -23,7 +23,7 @@
   </head>
   <body>
 		
-		<div   class="wrapper d-flex align-items-xl-stretch" >
+	<%--	<div   class="wrapper d-flex align-items-xl-stretch" >
 			<nav id="sidebar" class="active">
 				<h1><a href="Principal.jsp" class="logo">Cli</a></h1>
         <ul class="list-unstyled components mb-5">
@@ -85,7 +85,7 @@
         </button>
       </div>
       <div class="modal-body">
-      <form action="sr_medicamento" method="post" class="form-group">
+      <form action="sr_medicamento?accion=Guardar" method="POST" class="form-group" enctype="multipart/form-data">
                 <label for="lbl_id">ID</label>
                 <input type="text" name="txt_id" id="txt_id" class="form-control" value="0" readonly>
                 <label for="lbl_medicina">MEDICINA</label>
@@ -97,13 +97,13 @@
                  <label for="lbl_fv">FECHA VENCIMIENTO</label>
                 <input type="date" name="txt_fv" id="txt_fv" class="form-control"  required>
                 <label for="lbl_imagen">IMAGEN</label>
-                <input type="text" name="txt_imagen" id="txt_imagen" class="form-control"  required>
+                <input type="file" name="fileimagen" id="fileimagen" class="form-control"  required>
                 
                  <br>
                  <div class="container align-content-center">
-                        <button  name="btn_agregar" id="btn_agregar" value="agregar"class="btn btn-success btn-lg">Agregar</button>
-                        <button  name="btn_modificar" id="btn_modificar" value="modificar"class="btn btn-info btn-lg">Modificar</button>
-                        <button  name="btn_eliminar" id="btn_eliminar" value="eliminar"class="btn btn-danger btn-lg"onclick="javascript:if(!confirm('Desea Eliminar Este Registro'))return false">Eliminar</button>
+                        <button  name="accion"  value="Guardar"class="btn btn-success btn-lg">Agregar</button>
+                        <button  name="accion" id="btn_modificar" value="modificar"class="btn btn-info btn-lg">Modificar</button>
+                        <button  name="accion" id="btn_eliminar" value="eliminar"class="btn btn-danger btn-lg"onclick="javascript:if(!confirm('Desea Eliminar Este Registro'))return false">Eliminar</button>
                        
                         
                         </div>
@@ -114,9 +114,9 @@
     </div>
   </div>
 </div>
-</div>
+</div> -->
            
-           <table class="table">
+            <%--   <table class="table">
     <thead class="thead-dark" style="text-align: center">
       <tr>
         <th>Medicamentos</th>
@@ -142,13 +142,77 @@
         }
         %>
     </tbody>
-  </table>
+</table> --%>
   
+           
+          <div class="container mt-4">
+            <div class="form-group">
+                <form action="sr_medicamento?accion=Guardar" class="col-md-6" method="POST" enctype="multipart/form-data">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Agregar Imagenes</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Medicamento</label>
+                                <input type="text" name="txtNombre" class="form-control">
+                                <lable>Existencia</lable>
+                                <input type="text" name="txtExustencia" class="form-control">
+                                <label>Fecha Ingreso</label>
+                                <input type="date" name="FI" class="form-control">
+                                <label>Fecha Vencimiento</label>
+                                <input type="date" name="FV" class="form-control">
+                                
+                            </div>
+                            <div class="form-group">
+                                <label>Imagen</label>
+                                <input type="file" name="fileImagen">
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-outline-primary" name="accion" value="Guardar">Guardar Imagen</button>
+                        </div>                
+                    </div>
+                </form>
+            </div>
             
-        </div>
-          
-</div>
-      </div>
+            <br>
+            
+            
+            <div class="form-group">
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="text-center">
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Existencia</th>
+                            <th>Fecha Ingreso</th>
+                            <th>Fecha Vencimiento</th>
+                            <th>Imagen</th>
+                            <th>ACCION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="p" items="${productos}">
+                            <tr class="text-center">
+                                <td>${p.id}</td>
+                                <td>${p.nombre}</td>
+                                <td>${p.existencia}</td>
+                                <td>${p.fechaIngreso}</td>
+                                <td>${p.fechaVencimiento}</td>
+                                <td><img src="${p.ruta}" height="100" width="100"></td>
+                                <td>
+                                    <a href="#" class="btn btn-warning">Editar</a>
+                                    <a href="#" class="btn btn-danger">Delete</a>
+                                </td>
+                            </tr>
+                        </c:forEach>                    
+                    </tbody>
+                </table>                         
+            </div>
+            
+  </div>
+
         
         <script src="js/jquery.min.js"></script>
     <script src="js/popper.js"></script>

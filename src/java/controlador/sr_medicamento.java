@@ -5,13 +5,21 @@
  */
 package controlador;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.Medicamento;
+import modelo.MedicamentoDAO;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  *
@@ -32,54 +40,72 @@ public class sr_medicamento extends HttpServlet {
     Medicamento medicamento;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet sr_medicamento</title>");            
-            out.println("</head>");
-            out.println("<body>");
-          
-             medicamento = new Medicamento(Integer.valueOf(request.getParameter("txt_id")),request.getParameter("txt_medicina"),request.getParameter("txt_existencia"),request.getParameter("txt_fi"),request.getParameter("txt_fv"),request.getParameter("txt_imagen"));
-            // Boton agregar 
-            if ("agregar".equals(request.getParameter("btn_agregar"))){
-             if (medicamento.agregar()>0){
-             response.sendRedirect("CrudMedicamento.jsp");
-             
-             }else{
-             out.println("<h1> xxxxxxx No se Ingreso xxxxxxxxxxxx </h1>");
-             out.println("<a href='CrudMedicamento.jsp'>Regresar...</a>");
-             }
-             }
-            
-            // Boton modificar 
-            if ("modificar".equals(request.getParameter("btn_modificar"))){
-             if (medicamento.modificar()>0){
-             response.sendRedirect("CrudMedicamento.jsp");
-             
-             }else{
-             out.println("<h1> xxxxxxx No se Modifico xxxxxxxxxxxx </h1>");
-             out.println("<a href='CrudMedicamento.jsp'>Regresar...</a>");
-             }
-             }
-            
-            // Boton eliminar 
-            if ("eliminar".equals(request.getParameter("btn_eliminar"))){
-             if (medicamento.eliminar()>0){
-             response.sendRedirect("CrudMedicamento.jsp");
-             
-             }else{
-             out.println("<h1> xxxxxxx No se Elimino xxxxxxxxxxxx </h1>");
-             out.println("<a href='CrudMedicamento.jsp'>Regresar...</a>");
-             }
-             }
-            
-            out.println("</body>");
-            out.println("</html>");
+       
+          String accion = request.getParameter("accion");
+        Medicamento m = new Medicamento();
+        MedicamentoDAO mdao = new MedicamentoDAO();
+        switch (accion) {
+            case "Guardar":
+                ArrayList<String> lista = new ArrayList<>();
+                try {
+                    FileItemFactory file = new DiskFileItemFactory();
+                    ServletFileUpload fileUpload = new ServletFileUpload(file);
+                    List items = fileUpload.parseRequest(request);
+                    for (int i = 0; i < items.size(); i++) {
+                        FileItem fileItem = (FileItem) items.get(i);
+                        if (!fileItem.isFormField()) {
+                            File f = new File("C:\\xampp\\htdocs\\img\\"+ fileItem.getName());
+                            fileItem.write(f);
+                            m.setRuta("http://localhost/img/"+fileItem.getName());
+                        } else {
+                            lista.add(fileItem.getString());
+                        }
+                    }
+                    m.setNombre(lista.get(0));
+                    m.setExistencia(lista.get(1));
+                    m.setFechaIngreso(lista.get(2));
+                    m.setFechaVencimiento(lista.get(3));
+                    mdao.agregar(m);
+                } catch (Exception e) {
+                }
+                request.getRequestDispatcher("sr_medicamento?accion=Listar").forward(request, response);
+                break;
+                
+            case "Editar":
+                ArrayList<String> listae = new ArrayList<>();
+                try {
+                    FileItemFactory file = new DiskFileItemFactory();
+                    ServletFileUpload fileUpload = new ServletFileUpload(file);
+                    List items = fileUpload.parseRequest(request);
+                    for (int i = 0; i < items.size(); i++) {
+                        FileItem fileItem = (FileItem) items.get(i);
+                        if (!fileItem.isFormField()) {
+                            File f = new File("C:\\xampp\\htdocs\\img\\"+ fileItem.getName());
+                            fileItem.write(f);
+                            m.setRuta("http://localhost/img/"+fileItem.getName());
+                        } else {
+                            listae.add(fileItem.getString());
+                        }
+                    }
+                    m.setNombre(listae.get(0));
+                    mdao.modificar(m);
+                } catch (Exception e) {
+                }
+                request.getRequestDispatcher("sr_medicamento?accion=Listar").forward(request, response);
+                
+                break;
+            case "Eliminar":
+                break;
+            case "Listar":
+                List<Medicamento> medicamentos=mdao.listar();
+                request.setAttribute("medicamentos", medicamentos);
+                request.getRequestDispatcher("CrudMedicamento.jsp").forward(request, response);
+                break;
+            default:
+                throw new AssertionError();
         }
     }
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

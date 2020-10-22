@@ -3,16 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/josue/Documents/NetBeansProjects/login/web/css/estilos.css</file>
-            <file>file:/C:/Users/josue/Documents/NetBeansProjects/login/src/java/modelo/Validar.java</file>
-            <file>file:/C:/Users/josue/Documents/NetBeansProjects/login/web/index.jsp</file>
-            <file>file:/C:/Users/josue/Documents/NetBeansProjects/login/web/VistaEmpleado.jsp</file>
-            <file>file:/C:/Users/josue/Documents/NetBeansProjects/login/web/Principal.jsp</file>
-            <file>file:/C:/Users/josue/Documents/NetBeansProjects/login/src/java/controlador/login.java</file>
-            <file>file:/C:/Users/josue/Documents/NetBeansProjects/login/src/java/modelo/UsuarioDAO.java</file>
-            <file>file:/C:/Users/josue/Documents/NetBeansProjects/login/src/java/modelo/Usuario.java</file>
-            <file>file:/C:/Users/josue/Documents/NetBeansProjects/login/web/Registro.jsp</file>
-            <file>file:/C:/Users/josue/Documents/NetBeansProjects/login/src/java/modelo/Conexion.java</file>
+            <file>file:/C:/Users/josue/Documents/NetBeansProjects/login/src/java/modelo/MedicamentoDAO.java</file>
+            <file>file:/C:/Users/josue/Documents/NetBeansProjects/login/src/java/modelo/Medicamento.java</file>
+            <file>file:/C:/Users/josue/Documents/NetBeansProjects/login/src/java/controlador/sr_medicamento.java</file>
+            <file>file:/C:/Users/josue/Documents/NetBeansProjects/login/web/CrudMedicamento.jsp</file>
         </group>
     </open-files>
 </project-private>

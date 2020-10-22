@@ -65,13 +65,41 @@
             
            
         </nav>
-          
+
+        <div class="container mt-4">
+            <h1>Bienvenido al Sistema  <strong style="text-transform: capitalize">${usuario}</strong></h1><br><br>
+            
+            <div class="card-group">
+                <div class="card" style="margin-right: 10px">
+    <img class="card-img-top img-fluid" src="imagen/consulta.jpg" style="height: 300px" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Consulta General</h5>
+      <p class="card-text"></p>
+    </div>
+  </div>
+  <div class="card" style="margin-right: 10px">
+      <img class="card-img-top img-fluid" src="imagen/pediatria.jpg" style="height: 300px" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Pediatria</h5>
+      <p class="card-text"></p>
+      
+    </div>
+  </div>
+  <div class="card" style="margin-right: 10px">
+    <img class="card-img-top" src="imagen/examenes.jpg" style="height: 300px" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Exámenes Medicos</h5>
+      <p class="card-text"></p>
+    </div>
+  </div>
 </div>
         </div>
-        
-        <script src="js/jquery.min.js"></script>
+      </div>
+		</div>
+
+    <script src="js/jquery.min.js"></script>
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
-    </body>
+  </body>
 </html>
