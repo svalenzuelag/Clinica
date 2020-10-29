@@ -9,8 +9,8 @@
         <servlet-class>controlador.sr_paciente</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>sr_medicamento</servlet-name>
-        <servlet-class>controlador.sr_medicamento</servlet-class>
+        <servlet-name>BuscarEmpleado</servlet-name>
+        <servlet-class>controlador.BuscarEmpleado</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>sr_empleado</servlet-name>
@@ -21,8 +21,8 @@
         <url-pattern>/sr_paciente</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>sr_medicamento</servlet-name>
-        <url-pattern>/sr_medicamento</url-pattern>
+        <servlet-name>BuscarEmpleado</servlet-name>
+        <url-pattern>/BuscarEmpleado</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

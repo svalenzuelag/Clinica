@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -141,6 +143,35 @@ public class Empleado extends Persona{
             System.out.println(ex.getMessage());
         }
     return retorno;
+    }
+    
+    public List<Empleado>getEmpleado(String filtro) throws SQLException{
+        List <Empleado>lista = new ArrayList<>();
+         PreparedStatement parametroE;
+            cn = new Conexion();
+            cn.abrir_conexion();
+            String queryE = "SELECT E.id_empleado,E.nombres,E.apellidos,E.direccion,E.telefono,E.fecha_nacimiento,E.correo,U.usuario,P.puesto from empleado E inner join usuario U on E.id_usuario=U.id_usuario inner join puesto P on E.id_puesto=P.id_puesto where E.nombres like '%"+filtro+"%' or E.apellidos  like '%"+filtro+"%' or E.direccion like '%"+filtro+"%' or E.telefono like '%"+filtro+"%' or E.fecha_nacimiento like '%"+filtro+"%' or E.correo like '%"+filtro+"%' or U.usuario like '%"+filtro+"%' or P.puesto like '%"+filtro+"%'; ";
+            //con = cn.getConnection();
+            parametroE = cn.conexionBD.prepareStatement(queryE);
+            ResultSet consultaE =parametroE.executeQuery();
+            while(consultaE.next()){
+                
+                Empleado e = new Empleado();
+                e.setId(consultaE.getInt(1));
+                e.setNombres(consultaE.getString(2));
+                e.setApellidos(consultaE.getString(3));
+                e.setDireccion(consultaE.getString(4));
+                e.setTelefono(consultaE.getString(5));
+                e.setFecha_nacimiento(consultaE.getString(6));
+                e.setCorreo(consultaE.getString(7));
+                e.setId_usuario(consultaE.getInt(8));
+                e.setId_puesto(consultaE.getInt(9));
+                lista.add(e);
+            }    
+            cn.cerrar_conexion();
+        
+        return lista;
+    
     }
    
 }

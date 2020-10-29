@@ -1,10 +1,11 @@
 <%-- 
-    Document   : CrudEmpleado
-    Created on : 09-oct-2020, 22:46:50
+    Document   : CrudCita
+    Created on : 26-oct-2020, 13:57:39
     Author     : josue
 --%>
 
-<%@page import="modelo.Puesto"%>
+<%@page import="modelo.CitaMedica"%>
+<%@page import="modelo.Sucursal"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="javax.swing.table.DefaultTableModel"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -15,7 +16,7 @@
 <!doctype html>
 <html lang="es">
   <head>
-  	<title>Empleado</title>
+  	<title>Citas Medicas</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -23,7 +24,7 @@
 		
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="css/style.css">
-                <script src="js/BuscarEmpleado.js" type="text/javascript"></script>
+                <script src="js/BuscarCita.js" type="text/javascript"></script>
   </head>
   <body>
       
@@ -78,56 +79,44 @@
   </form>
 </nav>
 
-            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal_Empleado"onclick="limpiar()">Nuevo</button>
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal_Cita"onclick="limpiar()">Nuevo</button>
         <div class="container">
-            <div class="modal fade" id="modal_Empleado" role="dialog">
+            <div class="modal fade" id="modal_Cita" role="dialog">
   <div class="modal-dialog ">
     <div class="modal-content">
 
       <!-- Modal content -->
       <div class="modal-content">
 	<div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Empleados</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Cita Medica</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-      <form action="sr_empleado" method="post" class="form-group">
+      <form action="sr_citaMedica" method="post" class="form-group">
                 <label for="lbl_id">ID</label>
                 <input type="text" name="txt_id" id="txt_id" class="form-control" value="0" readonly>
+                 <label for="lbl_fn">FECHA CITA</label>
+                <input type="date" name="txt_cita" id="txt_cita" class="form-control"  required>
+                <label for="lbl_usuario">SUCURSAL</label>
+                <select name="drop_sucursal" id="drop_sucursal" class="form-control">
+                    <%
+                        Sucursal sucursal = new Sucursal();
+                        HashMap<String,String> dropSucursal = sucursal.drop_sucursal();
+                                for (String i: dropSucursal.keySet()){
+                        out.println("<option value='"+i+"'>"+ dropSucursal.get(i)+"</option>");
+                        }
+                    %>
+                </select>
                 <label for="lbl_nombres">NOMBRES</label>
                 <input type="text" name="txt_nombres" id="txt_nombres" class="form-control"  required>
                 <label for="text_apellidos">APELLIDOS</label>
                 <input type="text" name="txt_apellidos" id="txt_apellidos" class="form-control"  required>
-                <label for="lbl_direccion">DIRECCION</label>
-                <input type="text" name="txt_direccion" id="txt_direccion" class="form-control"  required>
                  <label for="lbl_telefono">TELEFONO</label>
                 <input type="text" name="txt_telefono" id="txt_telefono" class="form-control"  required>
-                <label for="lbl_fn">FECHA NACIMIENTO</label>
-                <input type="date" name="txt_fn" id="txt_fn" class="form-control"  required>
                 <label for="lbl_correo">CORREO</label>
                 <input type="text" name="txt_correo" id="txt_correo" class="form-control"  required>
-                <label for="lbl_usuario">USUARIO</label>
-                <select name="drop_usuario" id="drop_usuario" class="form-control">
-                    <%
-                        Usuario usuario = new Usuario();
-                        HashMap<String,String> dropUsuario = usuario.drop_usuario();
-                        for (String i: dropUsuario.keySet()){
-                        out.println("<option value='"+i+"'>"+ dropUsuario.get(i)+"</option>");
-                        }
-                    %>
-                </select>
-                <label for="lbl_usuario">PUESTO</label>
-                <select name="drop_puesto" id="drop_puesto" class="form-control">
-                    <%
-                        Puesto puesto = new Puesto();
-                        HashMap<String,String> dropPuesto = puesto.drop_puesto();
-                        for (String i: dropPuesto.keySet()){
-                        out.println("<option value='"+i+"'>"+ dropPuesto.get(i)+"</option>");
-                        }
-                    %>
-                </select>
                  <br>
                  <div class="container align-content-center">
                         <button  name="btn_agregar" id="btn_agregar" value="agregar"class="btn btn-success btn-lg">Agregar</button>
@@ -148,24 +137,22 @@
           
           <br>
           
-          <table class="table" id="tblEmpleados">
+          <table class="table" id="tblCita">
     <thead class="thead-dark" style="text-align: center">
       <tr>
+        <th>Fecha</th>
+        <th>Sucursal</th>
         <th>Nombres</th>
         <th>Apellidos</th>
-        <th>Direccion</th>
         <th>Telefono</th>
-        <th>Fecha Nacimiento</th>
         <th>Correo</th>
-        <th>Usuario</th>
-        <th>Puesto</th>
       </tr>
     </thead>
-    <tbody id="tbl_empleados">
+    <tbody id="tbl_cita">
         <%
-        Empleado empleado = new Empleado();
+        CitaMedica citaMedida = new CitaMedica();
         DefaultTableModel tabla = new  DefaultTableModel();
-        tabla = empleado.leerEmpleado();
+        tabla = citaMedida.leerCita();
         for ( int t=0; t<tabla.getRowCount();t++){
             out.println("<tr data-id="+ tabla.getValueAt(t, 0) +">");
             out.println("<td style='text-align: center'>"+tabla.getValueAt(t,1)+"</td>");
@@ -174,8 +161,6 @@
             out.println("<td style='text-align: center'>"+tabla.getValueAt(t,4)+"</td>");
             out.println("<td style='text-align: center'>"+tabla.getValueAt(t,5)+"</td>");
             out.println("<td style='text-align: center'>"+tabla.getValueAt(t,6)+"</td>");
-            out.println("<td style='text-align: center'>"+tabla.getValueAt(t,7)+"</td>");
-            out.println("<td style='text-align: center'>"+tabla.getValueAt(t,8)+"</td>");
             out.println("</tr>");
         }
         %>
@@ -196,39 +181,33 @@
     <script src="js/main.js"></script>
     <script type="text/javascript">
     function limpiar(){
-        $("#txt_id").val(0);
+       $("#txt_id").val(0);
+       $("#txt_cita").val('');
+       $("#txt_sucursal").val('');
        $("#txt_nombres").val('');
        $("#txt_apellidos").val('');
-       $("#txt_direccion").val('');
        $("#txt_telefono").val('');
-       $("#txt_fn").val('');
        $("#txt_correo").val('');
-       $("#drop_usuario").val(1);
-       $("#drop_puesto").val(1);
     }
     
-   $('#tbl_empleados').on('click','tr td',function(evt){
-       var target,id,id_u,id_p,nombres,apellidos,direccion,telefono,nacimiento,correo; 
+   $('#tbl_cita').on('click','tr td',function(evt){
+       var target,id,fecha,sucursal,nombres,apellidos,telefono,correo; 
        target = $(event.target);
        id = target.parent().data('id');
-       id_p = target.parent().data('id_p');
-       id_u = target.parent().data('id_p');
-       nombres= target.parent("tr").find("td").eq(0).html();
-       apellidos = target.parent("tr").find("td").eq(1).html();
-       direccion = target.parent("tr").find("td").eq(2).html();
-       telefono = target.parent("tr").find("td").eq(3).html();
-       nacimiento = target.parent("tr").find("td").eq(4).html();
+       fecha= target.parent("tr").find("td").eq(0).html();
+       sucursal= target.parent("tr").find("td").eq(1).html();
+       nombres= target.parent("tr").find("td").eq(2).html();
+       apellidos = target.parent("tr").find("td").eq(3).html();
+       telefono = target.parent("tr").find("td").eq(4).html();
        correo = target.parent("tr").find("td").eq(5).html();
        $("#txt_id").val(id);
+       $("#txt_cita").val(fecha);
+       $("txt_sucursal").val(sucursal);
        $("#txt_nombres").val(nombres);
        $("#txt_apellidos").val(apellidos);
-       $("#txt_direccion").val(direccion);
        $("#txt_telefono").val(telefono);
-       $("#txt_fn").val(nacimiento);
        $("#txt_correo").val(correo);
-       $("#drop_puesto").val(id_p);
-       $("#drop_usuario").val(id_u);
-       $("#modal_Empleado").modal('show');
+       $("#modal_Cita").modal('show');
     });
    
 </script>

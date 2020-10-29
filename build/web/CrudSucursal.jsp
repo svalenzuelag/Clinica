@@ -1,3 +1,5 @@
+<%@page import="modelo.Sucursal"%>
+<%@page import="modelo.SucursalDAO"%>
 <%@page import="javax.xml.ws.Response"%>
 <%@page import="modelo.Usuario"%>
 <%@page import="java.util.ArrayList"%>
@@ -9,7 +11,7 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-  	<title>Medicamento</title>
+  	<title>Sucursales</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -72,45 +74,40 @@
                                 </div>
                                 
             
-            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal_Medicamento"onclick="limpiar()">Nuevo</button>
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal_Sucursal"onclick="limpiar()">Nuevo</button>
         <div class="container">
-            <div class="modal fade" id="modal_Medicamento" role="dialog">
+            <div class="modal fade" id="modal_Sucursal" role="dialog">
                 <div class="modal-dialog ">
                     <div class="modal-content">
 
                         <!-- Modal content -->
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Medicamentos</h5>
+                                <h5 class="modal-title" id="exampleModalLongTitle">Sucursales</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="Controlador?accion=Guardar" method="POST" class="form-group" enctype="multipart/form-data">
-                                    <label for="lbl_id">ID</label>
-                                    <input type="text" name="txt_id" id="txt_id" class="form-control" value="0" readonly>
-                                    <label for="lbl_medicina">MEDICINA</label>
-                                    <input type="text" name="txtNombre" id="txt_medicina" class="form-control"  required>
-                                    <label for="lbl_existencia">EXISTENCIA</label>
-                                    <input type="text" name="txtExistencia" id="text_existencia" class="form-control"  required>
-                                    <label for="lbl_fi">FECHA INGRESO</label>
-                                    <input type="date" name="FI" id="txt_fi" class="form-control"  required>
-                                    <label for="lbl_fv">FECHA VENCIMIENTO</label>
-                                    <input type="date" name="FV" id="txt_fv" class="form-control"  required>
-                                    <label for="lbl_imagen">IMAGEN</label>
-                                    <input type="file" name="fileimagen" id="fileimagen" class="form-control"  required>
-
-                                    <br>
-                                    <div class="container align-content-center">
-                                        <button  name="accion" value="Guardar" class="btn btn-success btn-lg">Agregar</button>
-                                        <button  name="accion" id="btn_modificar" value="modificar"class="btn btn-info btn-lg">Modificar</button>
-                                        <button  name="accion" id="btn_eliminar" value="eliminar"class="btn btn-danger btn-lg"onclick="javascript:if (!confirm('Desea Eliminar Este Registro'))
-                                    return false">Eliminar</button>
-
-
-                                    </div>
-                                </form>
+                                <form action="ControllerS?accion=Guardar" method="POST" class="form-group" enctype="multipart/form-data">
+                <label for="lbl_id">ID</label>
+                <input type="text" name="txt_id" id="txt_id" class="form-control" value="0" readonly>
+                <label for="lbl_medicina">SUCURSAL</label>
+                <input type="text" name="txtSucursal" id="txt_sucursal" class="form-control"  required>
+                <label for="lbl_existencia">DIRECCION</label>
+                <input type="text" name="txtDireccion" id="txt_direccion" class="form-control"  required>
+                <label for="lbl_imagen">IMAGEN</label>
+                <input type="file" name="fileimagen" id="fileimagen" class="form-control"  required>
+                
+                 <br>
+                 <div class="container align-content-center">
+                        <button  name="accion" value="Guardar" class="btn btn-success btn-lg">Agregar</button>
+                        <button  name="accion" id="btn_modificar" value="Modificar"class="btn btn-info btn-lg">Modificar</button>
+                        <button  name="accion" id="btn_eliminar" value="Eliminar"class="btn btn-danger btn-lg"onclick="javascript:if(!confirm('Desea Eliminar Este Registro'))return false">Eliminar</button>
+                       
+                        
+                        </div>
+        </form>
                             </div>
 
 
@@ -155,9 +152,9 @@
 
                     <div class="row">
                         <%
-                            ProductoDAO pdao = new ProductoDAO();
-                            List<Producto> lista = new ArrayList<>();
-                            lista = pdao.listar();
+                            SucursalDAO sdao = new SucursalDAO();
+                            List<Sucursal> lista = new ArrayList<>();
+                            lista = sdao.listar();
                             
                             for (int l = 0; l < lista.size(); l++) {
                                 out.println("<div class='col-12 col-md-4 mb-3' id='divMedicamento'>");
@@ -165,7 +162,7 @@
                                 out.println("<img src='" + lista.get(l).getRuta() + "' class='card-img-top' style='background: transparent'>");
                                 out.println("  <hr/>");
                                 out.println("<div class='card-body'>");
-                                out.println("<strong>" + lista.get(l).getNombre() + "</strong><br>");
+                                out.println("<strong>" + lista.get(l).getSucursal() + "</strong><br>");
                                  out.println("<a href='#' class='btn btn-outline-info' data-toggle='modal' data-target='#modal_Read'>Ver</a>");
                                 out.println("</div>");
                                 out.println("</div>");

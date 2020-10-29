@@ -4,6 +4,7 @@
     Author     : josue
 --%>
 
+<%@page import="modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -19,6 +20,12 @@
 		<link rel="stylesheet" href="css/style.css">
     </head>
     <body>
+        <%
+      Usuario u = (Usuario)session.getAttribute("user");
+      if(u == null){
+        response.sendRedirect("index.jsp");
+        }
+      %>
 
         	<div   class="wrapper d-flex align-items-xl-stretch" >
 			<nav id="sidebar" class="active">
@@ -27,12 +34,12 @@
           <li class="active">
             <a href="VistaUsuario.jsp"><span class="fa fa-home"></span> Inicio</a>
           </li>
-          
+           
           <li>
-            <a href="CrudUsuario.jsp"><span class="fa fa-bars"></span> Historial</a>
+            <a href="#"><span class="fa fa-bars"></span> Historial</a>
           </li>
           <li>
-            <a href="#"><span class="fa fa-user"></span> Pacientes</a>
+            <a href="PacientesU.jsp"><span class="fa fa-user"></span> Pacientes</a>
           </li>
           <li>
             <a href="#"><span class="fa fa-calendar-o"></span> Citas</a>
@@ -45,7 +52,7 @@
             
             <a href="#"><span class="fa fa-heartbeat" ></span> Diagnostico</a>
             
-            <a href="login?accion=Salir"><span class="fa fa-sign-out" ></span> Salir</a>
+             <a href="CerrarSesion"><span class="fa fa-sign-out" ></span> Salir</a>
           </li>
         </ul>
 

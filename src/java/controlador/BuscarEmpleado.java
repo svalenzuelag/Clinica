@@ -7,71 +7,59 @@ package controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import modelo.Usuario;
-import modelo.UsuarioDAO;
-
+import javax.swing.table.DefaultTableModel;
+import modelo.Empleado;
 
 /**
  *
  * @author josue
  */
-@WebServlet(name = "login", urlPatterns = {"/login"})
-public class login extends HttpServlet {
-    UsuarioDAO dao = new UsuarioDAO();
-    Usuario u=new Usuario();
-    int r;
-   
+
+@WebServlet(name = "BuscarEmpleado", urlPatterns = {"/BuscarEmpleado"})
+public class BuscarEmpleado extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String accion=request.getParameter("accion");
-        if(accion.equals("Ingresar")){
+        try (PrintWriter out = response.getWriter()) {
+        
+            String filtro = request.getParameter("filtro");
             
-            String usuario=request.getParameter("txtusu");
-            String pass=request.getParameter("txtpass");
+            Empleado e = new Empleado();
             
-            u.setUsuario(usuario);
-            u.setPass(pass);
-            String rol= dao.rol(u);
-            r=dao.validar(u);
-            if(r==1){
-                request.getSession().setAttribute("usuario", usuario);
-                request.getSession().setAttribute("pass", pass);
-                
-                
-                if(rol.equals("admin")){
-                    
-                     HttpSession session = request.getSession();
-                session.setAttribute("user", u);
-                
-                request.getRequestDispatcher("Principal.jsp").forward(request, response);
-                
-                    //request.getRequestDispatcher("Principal.jsp").forward(request, response);
-                }
-                else{
-                    HttpSession session = request.getSession();
-                session.setAttribute("user", u);
-                    request.getRequestDispatcher("VistaUsuario.jsp").forward(request, response);
-                }
-                
-               
-                
-            }else{
-                request.getRequestDispatcher("index.jsp").forward(request, response);
+            for(Empleado Em : e.getEmpleado(filtro)){
+            
+            Empleado empleado = new Empleado();
+        DefaultTableModel tabla = new  DefaultTableModel();
+        tabla = empleado.leerEmpleado();
+        for ( int t=0; t<tabla.getRowCount();t++){
+            out.println("<tr data-id="+ tabla.getValueAt(t, 0) +">");
+            out.println("<td style='text-align: center'>"+tabla.getValueAt(t,1)+"</td>");
+            out.println("<td style='text-align: center'>"+tabla.getValueAt(t,2)+"</td>");
+            out.println("<td style='text-align: center'>"+tabla.getValueAt(t,3)+"</td>");
+            out.println("<td style='text-align: center'>"+tabla.getValueAt(t,4)+"</td>");
+            out.println("<td style='text-align: center'>"+tabla.getValueAt(t,5)+"</td>");
+            out.println("<td style='text-align: center'>"+tabla.getValueAt(t,6)+"</td>");
+            out.println("<td style='text-align: center'>"+tabla.getValueAt(t,7)+"</td>");
+            out.println("<td style='text-align: center'>"+tabla.getValueAt(t,8)+"</td>");
+            out.println("</tr>");
+        }
             }
-        }else {
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            } catch (SQLException ex) {
+            Logger.getLogger(BuscarEmpleado.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        
+        }
     }
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -82,6 +70,8 @@ public class login extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+   
+     /*
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -96,7 +86,7 @@ public class login extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
+   /* @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
@@ -107,9 +97,9 @@ public class login extends HttpServlet {
      *
      * @return a String containing servlet description
      */
-    @Override
+    /*@Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
-}
+}*/

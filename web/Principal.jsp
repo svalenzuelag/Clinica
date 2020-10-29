@@ -21,6 +21,12 @@
 		<link rel="stylesheet" href="css/style.css">
   </head>
   <body>
+      <%
+      Usuario u = (Usuario)session.getAttribute("user");
+      if(u == null){
+        response.sendRedirect("index.jsp");
+        }
+      %>
 		
 		<div   class="wrapper d-flex align-items-xl-stretch" >
 			<nav id="sidebar" class="active">
@@ -39,17 +45,18 @@
             <a href="CrudPaciente.jsp"><span class="fa fa-user"></span> Pacientes</a>
           </li>
           <li>
-            <a href="#"><span class="fa fa-calendar-o"></span> Citas</a>
+            <a href="CrudCita.jsp"><span class="fa fa-calendar-o"></span> Citas</a>
             
-            <a href="#"><span class="fa fa-hospital-o"></span> Sucursales</a>
+            <a href="CrudSucursal.jsp"><span class="fa fa-hospital-o"></span> Sucursales</a>
             
             <a href="CrudMedicamento.jsp"><span class="fa fa-plus-square"></span> Medicamentos</a>
             
             <a href="#"><span class="fa fa-clipboard" ></span> Consultas</a>
+            <a href="#"><span class="fa fa-bed"></span>Habitaciones</a>
             
             <a href="#"><span class="fa fa-heartbeat" ></span> Diagnostico</a>
             
-            <a href="login?accion=Salir"><span class="fa fa-sign-out" ></span> Salir</a>
+            <a href="CerrarSesion"><span class="fa fa-sign-out" ></span> Salir</a>
           </li>
         </ul>
 

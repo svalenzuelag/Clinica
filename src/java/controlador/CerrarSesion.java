@@ -12,65 +12,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import modelo.Usuario;
-import modelo.UsuarioDAO;
-
+import javax.servlet.http.HttpSession; 
 
 /**
  *
  * @author josue
  */
-@WebServlet(name = "login", urlPatterns = {"/login"})
-public class login extends HttpServlet {
-    UsuarioDAO dao = new UsuarioDAO();
-    Usuario u=new Usuario();
-    int r;
-   
-    
+@WebServlet(name = "CerrarSesion", urlPatterns = {"/CerrarSesion"})
+public class CerrarSesion extends HttpServlet {
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String accion=request.getParameter("accion");
-        if(accion.equals("Ingresar")){
-            
-            String usuario=request.getParameter("txtusu");
-            String pass=request.getParameter("txtpass");
-            
-            u.setUsuario(usuario);
-            u.setPass(pass);
-            String rol= dao.rol(u);
-            r=dao.validar(u);
-            if(r==1){
-                request.getSession().setAttribute("usuario", usuario);
-                request.getSession().setAttribute("pass", pass);
-                
-                
-                if(rol.equals("admin")){
-                    
-                     HttpSession session = request.getSession();
-                session.setAttribute("user", u);
-                
-                request.getRequestDispatcher("Principal.jsp").forward(request, response);
-                
-                    //request.getRequestDispatcher("Principal.jsp").forward(request, response);
-                }
-                else{
-                    HttpSession session = request.getSession();
-                session.setAttribute("user", u);
-                    request.getRequestDispatcher("VistaUsuario.jsp").forward(request, response);
-                }
-                
-               
-                
-            }else{
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-            }
-        }else {
-            request.getRequestDispatcher("index.jsp").forward(request, response);
-        }
         
-        
+          HttpSession session = request.getSession();
+          session.removeAttribute("user");
+          response.sendRedirect("index.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -4,6 +4,7 @@
     Author     : josue
 --%>
 
+<%@page import="modelo.Usuario"%>
 <%@page import="javax.swing.table.DefaultTableModel"%>
 <%@page import="modelo.Paciente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -19,8 +20,15 @@
 		
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="css/style.css">
+                <script src="js/BuscarPaciente.js" type="text/javascript"></script>
   </head>
   <body>
+      <%
+      Usuario u = (Usuario)session.getAttribute("user");
+      if(u == null){
+        response.sendRedirect("index.jsp");
+        }
+      %>
 		
 		<div   class="wrapper d-flex align-items-xl-stretch" >
 			<nav id="sidebar" class="active">
@@ -39,9 +47,9 @@
             <a href="CrudPaciente.jsp"><span class="fa fa-user"></span> Pacientes</a>
           </li>
           <li>
-            <a href="#"><span class="fa fa-calendar-o"></span> Citas</a>
+            <a href="CrudCita.jsp"><span class="fa fa-calendar-o"></span> Citas</a>
             
-            <a href="#"><span class="fa fa-hospital-o"></span> Sucursales</a>
+            <a href="CrudSucursal.jsp"><span class="fa fa-hospital-o"></span> Sucursales</a>
             
             <a href="CrudMedicamento.jsp"><span class="fa fa-plus-square"></span> Medicamentos</a>
             
@@ -49,7 +57,7 @@
             
             <a href="#"><span class="fa fa-heartbeat" ></span> Diagnostico</a>
             
-            <a href="login?accion=Salir"><span class="fa fa-sign-out" ></span> Salir</a>
+            <a href="CerrarSesion"><span class="fa fa-sign-out" ></span> Salir</a>
           </li>
         </ul>
 
@@ -59,15 +67,12 @@
         <!-- Page Content  -->
       <div id="content" class="p-4 p-md-5">
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <div class="container-fluid">
-
-            <button type="button" id="sidebarCollapse" class="btn btn-primary">
-              <i class="fa fa-bars"></i>
-              <span class="sr-only">Toggle Menu</span>
-            </button>
- 
-        </nav>
+          <nav class="navbar navbar-light bg-light">
+  <form class="form-inline">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="txt_Buscar" onkeyup="doSearch()"/>
+    
+  </form>
+</nav>
           
           <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal_Paciente"onclick="limpiar()">Nuevo</button>
         <div class="container">
@@ -124,7 +129,7 @@
           <br>
 
           
-          <table class="table">
+          <table class="table" id="tblPaciente">
     <thead class="thead-dark" style="text-align: center">
       <tr>
         <th>Nombres</th>
