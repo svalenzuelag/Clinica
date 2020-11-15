@@ -39,7 +39,7 @@
               <a href="CrudEmpleado.jsp"><span class="fa fa-user"></span>Usuarios</a>
           </li>
           <li>
-            <a href="#"><span class="fa fa-bars"></span> Historial</a>
+            <a href="Historial.jsp"><span class="fa fa-bars"></span> Historial</a>
           </li>
           <li>
             <a href="CrudPaciente.jsp"><span class="fa fa-user"></span> Pacientes</a>
@@ -51,10 +51,10 @@
             
             <a href="CrudMedicamento.jsp"><span class="fa fa-plus-square"></span> Medicamentos</a>
             
-            <a href="#"><span class="fa fa-clipboard" ></span> Consultas</a>
-            <a href="#"><span class="fa fa-bed"></span>Habitaciones</a>
+            <a href="Consultas.jsp"><span class="fa fa-clipboard" ></span> Consultas</a>
+            <a href="CrudHabitacion.jsp"><span class="fa fa-bed"></span>Habitaciones</a>
             
-            <a href="#"><span class="fa fa-heartbeat" ></span> Diagnostico</a>
+            <a href="Diagnostico.jsp"><span class="fa fa-heartbeat" ></span> Diagnostico</a>
             
             <a href="CerrarSesion"><span class="fa fa-sign-out" ></span> Salir</a>
           </li>
